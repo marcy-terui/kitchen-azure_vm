@@ -21,6 +21,6 @@ module Kitchen
   module Driver
 
     # Version string for AzureVm Kitchen driver
-    AZURE_VM_VERSION = "0.1.0.dev"
+    AZURE_VM_VERSION = "0.1.0.beta"
   end
 end

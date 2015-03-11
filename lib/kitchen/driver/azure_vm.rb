@@ -30,12 +30,11 @@ module Kitchen
     # @author Masashi Terui <marcy9114@gmail.com>
     class AzureVm < Kitchen::Driver::SSHBase
 
-      default_config :management_endpoint,     'https://management.core.windows.net'
+      default_config :management_endpoint, 'https://management.core.windows.net'
       default_config :vm_user,                 'azureuser'
       default_config :location,                'West US'
       default_config :ssh_port,                22
       default_config :destroy_storage_account, true
-      default_config :vm_size,                 'Small'
       default_config :vm_size,                 'Small'
 
       default_config :vm_image do |driver|
@@ -70,7 +69,7 @@ module Kitchen
       def params(state)
         {
           :vm_name  => state[:vm_name],
-          :vm_user  => config[:username],
+          :vm_user  => config[:vm_user],
           :image    => config[:vm_image],
           :password => config[:password],
           :location => config[:location],
@@ -117,7 +116,7 @@ module Kitchen
 
       def destroy(state)
         info("Deleting VM <#{state[:vm_name]}>...")
-        vm = vm_service.delete_virtual_machine(state[:vm_name], state[:cloud_service_name])
+        vm = vm_service.delete_virtual_machine(state[:vm_name],state[:cloud_service_name])
         info("VM <#{state[:vm_name]}> deleted!")
         if config[:destroy_storage_account]
           delete_storage_account(state)

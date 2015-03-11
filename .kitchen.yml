@@ -8,12 +8,14 @@ driver_config:
   private_key_file: <%= ENV['AZURE_PRIVATE_KEY'] %>
   certificate_file: <%= ENV['AZURE_CERTIFICATE'] %>
   vm_size: Medium
+  location: Japan East
 
 provisioner:
   name: chef_zero
 
 platforms:
   - name: centos-6.5
+  - name: ubuntu-14.04
 
 suites:
   - name: default

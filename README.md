@@ -4,33 +4,163 @@ A Test Kitchen Driver for Azure Virtual Machine.
 
 ## <a name="requirements"></a> Requirements
 
-**TODO:** document any software or library prerequisites that are required to
-use this driver. Implement the `#verify_dependencies` method in your Driver
-class to enforce these requirements in code, if possible.
+- Test-Kitchen
 
 ## <a name="installation"></a> Installation and Setup
 
-Please read the [Driver usage][driver_usage] page for more details.
+```sh
+gem install kitchen-azure_vm
+```
+
+or put `Gemfile` in your project directory.
+
+```ruby
+source 'https://rubygems.org'
+
+gem 'kitchen-azure_vm'
+```
+
+and
+
+```sh
+bundle
+```
 
 ## <a name="config"></a> Configuration
 
-**TODO:** Write descriptions of all configuration options
+At first, put your `.kithcen(.local).yml` like this.
 
-### <a name="config-require-chef-omnibus"></a> require\_chef\_omnibus
+```yml
+---
+driver:
+  name: azure_vm
+  management_certificate: /path/to/management_certificate.cer
+  subscription_id: <%= ENV['AZURE_SUBSCRIPTION_ID'] %>
+  private_key_file: /path/to/private.key
+  certificate_file: /path/to/certificate.cer
 
-Determines whether or not a Chef [Omnibus package][chef_omnibus_dl] will be
-installed. There are several different behaviors available:
+platforms:
+  - name: ubuntu-14.04
+  - name: centos-6.6
 
-* `true` - the latest release will be installed. Subsequent converges
-  will skip re-installing if chef is present.
-* `latest` - the latest release will be installed. Subsequent converges
-  will always re-install even if chef is present.
-* `<VERSION_STRING>` (ex: `10.24.0`) - the desired version string will
-  be passed the the install.sh script. Subsequent converges will skip if
-  the installed version and the desired version match.
-* `false` or `nil` - no chef is installed.
+suites:
+  - name: default
+    run_list:
+    attributes:
+```
 
-The default value is unset, or `nil`.
+### management_certificate
+
+Path to the Management Certificate file.  
+See also https://msdn.microsoft.com/en-us/library/azure/gg551722.aspx
+
+Examples:
+
+```yml
+  management_certificate: /path/to/management_certificate.cer
+```
+
+### subscription_id
+
+Your Azure Subscription ID.  
+
+Examples:
+
+```yml
+  subscription_id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+```
+
+### private_key_file
+
+Path to the SSH private key file.
+
+Examples:
+
+```yml
+  private_key_file: /path/to/private.key
+```
+
+### private_key_file
+
+Path to the x509 SSH certificate file.
+
+Examples:
+
+```yml
+  certificate_file: /path/to/certificate.cer
+```
+
+### vm_user
+
+Login user name on the VM.
+
+The default value is `azureuser`.
+
+Examples:
+
+```yml
+  vm_user: example-user
+```
+
+### location
+
+Location(Region) of the VM.
+
+The default value is `West US`.
+
+Examples:
+
+```yml
+  location: Japan East
+```
+
+### ssh_port
+
+Port number of SSH.
+
+The default value is `22`.
+
+Examples:
+
+```yml
+  ssh_port: 2222
+```
+
+### destroy_storage_account
+
+Delete Storage Account when called `kitchen destroy`.
+
+The default value is `true`.
+
+Examples:
+
+```yml
+  destroy_storage_account: false
+```
+
+### vm_size
+
+VM instance size.
+
+The default value is `Small`.
+
+Examples:
+
+```yml
+  vm_size: Large
+```
+
+### vm_image
+
+VM boot image ID.
+
+The default value get from public images by `platform.name`.
+
+Examples:
+
+```yml
+  vm_size: Large
+```
 
 ## <a name="development"></a> Development
 
@@ -56,9 +186,9 @@ Created and maintained by [Masashi Terui][author] (<marcy9114@gmail.com>)
 Apache 2.0 (see [LICENSE][license])
 
 
-[author]:           https://github.com/enter-github-user
-[issues]:           https://github.com/enter-github-user/kitchen-azure_vm/issues
-[license]:          https://github.com/enter-github-user/kitchen-azure_vm/blob/master/LICENSE
-[repo]:             https://github.com/enter-github-user/kitchen-azure_vm
+[author]:           https://github.com/marcy-terui
+[issues]:           https://github.com/marcy-terui/kitchen-azure_vm/issues
+[license]:          https://github.com/marcy-terui/kitchen-azure_vm/blob/master/LICENSE
+[repo]:             https://github.com/marcy-terui/kitchen-azure_vm
 [driver_usage]:     http://docs.kitchen-ci.org/drivers/usage
 [chef_omnibus_dl]:  http://www.getchef.com/chef/install/
