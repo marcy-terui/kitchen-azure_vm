@@ -1,0 +1,21 @@
+---
+driver:
+  name: azure_vm
+
+driver_config:
+  management_certificate: <%= ENV['AZURE_MANAGEMENT_CERTIFICATE'] %>
+  subscription_id: <%= ENV['AZURE_SUBSCRIPTION_ID'] %>
+  private_key_file: <%= ENV['AZURE_PRIVATE_KEY'] %>
+  certificate_file: <%= ENV['AZURE_CERTIFICATE'] %>
+  vm_size: Medium
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.5
+
+suites:
+  - name: default
+    run_list:
+    attributes:
