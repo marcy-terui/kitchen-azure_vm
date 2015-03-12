@@ -34,7 +34,7 @@ At first, put your `.kithcen(.local).yml` like this.
 ---
 driver:
   name: azure_vm
-  management_certificate: /path/to/management_certificate.cer
+  management_certificate: /path/to/management_certificate.pem
   subscription_id: <%= ENV['AZURE_SUBSCRIPTION_ID'] %>
   private_key_file: /path/to/private.key
   certificate_file: /path/to/certificate.cer
@@ -52,12 +52,13 @@ suites:
 ### management_certificate
 
 Path to the Management Certificate file.  
+The file extension is `pem` or `pfx` only.  
 See also https://msdn.microsoft.com/en-us/library/azure/gg551722.aspx
 
 Examples:
 
 ```yml
-  management_certificate: /path/to/management_certificate.cer
+  management_certificate: /path/to/management_certificate.pem
 ```
 
 ### subscription_id
