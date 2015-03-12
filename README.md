@@ -81,7 +81,7 @@ Examples:
   private_key_file: /path/to/private.key
 ```
 
-### private_key_file
+### certificate_file
 
 Path to the x509 SSH certificate file.
 
